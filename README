@@ -1,0 +1,115 @@
+Name
+
+Sort::Naturally.pm
+
+Synopsis
+
+Sort strings containing a mix of letters and digits in an order more natural for
+human readers.
+
+    use v6;
+    use Sort::Naturally;
+
+    my @a = <1 11 100 14th 2 210 21 30 3rd d1 d10 D2 D21 d3 aid Are ANY>;
+
+    say @a.nsort.join(' ');
+    # or
+    say @a.sort( { $^a ncmp $^b } ).join(' ');
+
+
+Or, sort a list of dotted quad notation IP addresses:
+
+    use v6;
+    use Sort::Naturally;
+
+    my @ips = ((0..255).roll(4).join('.')for 0..99);
+    .say for @ips.nsort;
+
+
+
+Description
+
+Sort::Naturally sorts lexically, but sorts groups of consecutive digits by order
+of magnitude.
+
+Similar though not identical to the Perl 5 Sort::Naturally. When sorting strings
+that contain digits, will sort the groups of digits by "order of magnitude",
+then lexically. Order of magnitude is something of a simplification.
+Sort::Naturally does't try to interpret or evaluate a group of digits as a
+number, it just counts how many digits are in each group and uses that as its
+order of magnitude. 
+
+The implications are:
+
+    It doesn't understand the (non)significance of leading zeros; 0010, 0100 and
+    1000 are all treated as being of the same order of magnitude and will all be
+    sorted to be after 20 and 200.
+
+    It doesn't understand floating point numbers; the numbers before and after a
+    decimal point are treated as two separate groups of digits.
+
+    It doesn't understand or deal with scientific or exponential notation.
+
+However, that also means:
+
+    You are not limited by number magnitude. It will sort arbitrarily large
+    numbers with ease.
+
+    It is quite speedy. (For liberal values of speedy.)
+
+
+Sort::Naturally exposes two primary routines.
+
+C<nsort> is the primary sorting routine. May be called either as a method or a sub.
+C<@array.nsort> or C<nsort @array>.
+
+C<ncmp> is to be used in sort blocks. Useful when you need to do secondary
+sorts.
+
+Say you have a hash containg the words in a document with the keys being the
+number of times each appears. You could sort by word frequency, then naturally
+as follows:
+
+    ("%words{$_}, $_").say
+      for sort {%words{$^b} <=> %words{$^a} || $^a ncmp $^b}, %words.keys;
+
+Note: this will disable the default Schwartzian Transform and may be very slow.
+If that is an issue either do a manual Schwartzian Transform or some kind of
+caching of terms.
+
+***IMPORTANT CAVEAT***
+As it uses perl6s' sort behind the scenes, Sort::Naturally does a stable sort.
+Therefore terms that evaluate to the same string will be return in the order
+they were seen. For example: C<say <perl6 Perl6 PERL6 pErL6>.nsort.join(' ');>
+will return "perl6 Perl6 PERL6 pErL6". If this is unacceptable and you need to
+reliably sort uppercase before lower case, filter the list through a standard
+sort first: C<say <perl6 Perl6 PERL6 pErL6>.sort.nsort.join(' ');> returns
+"PERL6 Perl6 pErL6 perl6".
+
+Backward Compatibility
+
+Perl 5 Sort::Naturally has an odd convention in that numbers at the beginning of
+strings sorted in ASCII order (digits sort before letters) but numbers embedded
+inside strings are sorted in non-ASCII order (digits sort after letters). While
+this is just plain strange in my opinion, some people may rely on this behaviour
+so perl6 Sort::Naturally has "p5 compatibility mode" routines. These are
+analogues of the primary routines prepended with p5.
+
+C<p5nsort()> and C<p5ncmp>. Used identically to the p6 versions
+
+    say <foo12z foo foo13a fooa Foolio Foo12a foolio foo12 foo12a 9x
+      14>.p5nsort.join(' ');
+
+yeilds: 
+
+9x 14 foo fooa Foolio foolio foo12 Foo12a foo12a foo12z foo13a
+
+rather than:
+
+9x 14 foo foo12 Foo12a foo12a foo12z foo13a fooa Foolio foolio
+ 
+
+=head1 Author
+
+Stephen Schulze (often seen lurking on perlmonks.org and #perl6 IRC as
+thundergnat)
