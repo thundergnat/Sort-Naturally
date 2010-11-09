@@ -21,7 +21,7 @@ Or, sort a list of dotted quad notation IP addresses:
 
     use v6;
     use Sort::Naturally;
-
+    # generate an array of random IP addresses
     my @ips = ((0..255).roll(4).join('.')for 0..99);
     .say for @ips.nsort;
 
@@ -53,9 +53,10 @@ The implications are:
 However, that also means:
 
     You are not limited by number magnitude. It will sort arbitrarily large
-    numbers with ease.
+    numbers with ease regardless of the capability of your hardware/OS.
 
-    It is quite speedy. (For liberal values of speedy.)
+    It is quite speedy. (For liberal values of speedy.) Since it doesn't need
+    to interpret numbers by value it eliminates a lot of code that would do that.
 
 
 Sort::Naturally exposes two primary routines.
@@ -109,7 +110,11 @@ rather than:
 9x 14 foo foo12 Foo12a foo12a foo12z foo13a fooa Foolio foolio
  
 
-=head1 Author
+Author
 
 Stephen Schulze (often seen lurking on perlmonks.org and #perl6 IRC as
 thundergnat)
+
+License
+
+Licensed under The Artistic 2.0; see LICENSE.
