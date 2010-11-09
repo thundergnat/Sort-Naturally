@@ -1,6 +1,6 @@
 use v6;
 use MONKEY_TYPING;
-my $VERSION = 0.01
+my $VERSION = 0.01;
 
 augment class Any {
     our multi method nsort is export { self.list.sort( {

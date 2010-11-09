@@ -23,13 +23,13 @@ Or, sort a list of dotted quad notation IP addresses:
     use Sort::Naturally;
     # generate an array of random IP addresses
     my @ips = ((0..255).roll(4).join('.')for 0..99);
-    .say for @ips.nsort;
+    .say for nsort @ips;
 
 
 Description
 
-Sort::Naturally sorts lexically, but sorts groups of consecutive digits by order
-of magnitude.
+Sort::Naturally sorts groups of consecutive digits by order of magnitude then
+lexically.
 
 Similar though not identical to the Perl 5 Sort::Naturally. When sorting strings
 that contain digits, will sort the groups of digits by "order of magnitude",
@@ -42,7 +42,7 @@ The implications are:
 
     It doesn't understand the (non)significance of leading zeros; 0010, 0100 and
     1000 are all treated as being of the same order of magnitude and will all be
-    sorted to be after 20 and 200.
+    sorted to be after 20 and 200. 
 
     It doesn't understand floating point numbers; the numbers before and after a
     decimal point are treated as two separate groups of digits.
@@ -57,6 +57,13 @@ However, that also means:
     It is quite speedy. (For liberal values of speedy.) Since it doesn't need
     to interpret numbers by value it eliminates a lot of code that would do that.
 
+Sort::Naturally could have been modified to ignore leading zeros, and in fact I
+experimented with that bit, but then ran into issues with sorting zip codes and
+phone numbers. Just remember, it is for sorting strings, not numbers. It makes
+some attempt at treating groups of digits in a kind of numbery way, but they are
+still strings. If you truly want to sort numbers, use a numeric sort.
+
+Usage
 
 Sort::Naturally exposes two primary routines.
 
@@ -79,7 +86,7 @@ Schwartzian Transform or some kind of caching of terms.
 
 ***IMPORTANT CAVEAT***
 As it uses perl6s' sort behind the scenes, Sort::Naturally does a stable sort.
-Therefore terms that evaluate to the same string will be return in the order
+Therefore terms that evaluate to the same string will be returned in the order
 they were seen. For example: C<say <perl6 Perl6 PERL6 pErL6>.nsort.join(' ');>
 will return "perl6 Perl6 PERL6 pErL6". If this is unacceptable and you need to
 reliably sort uppercase before lower case, filter the list through a standard
@@ -89,11 +96,11 @@ sort first: C<say <perl6 Perl6 PERL6 pErL6>.sort.nsort.join(' ');> returns
 Backward Compatibility
 
 Perl 5 Sort::Naturally has an odd convention in that numbers at the beginning of
-strings sorted in ASCII order (digits sort before letters) but numbers embedded
-inside strings are sorted in non-ASCII order (digits sort after letters). While
-this is just plain strange in my opinion, some people may rely on this behaviour
-so perl6 Sort::Naturally has "p5 compatibility mode" routines. These are
-analogues of the primary routines prepended with p5.
+strings are sorted in ASCII order (digits sort before letters) but numbers
+embedded inside strings are sorted in non-ASCII order (digits sort after
+letters). While this is just plain strange in my opinion, some people may rely
+on this behaviour so perl6 Sort::Naturally has "p5 compatibility mode" routines.
+These are analogues of the primary routines prepended with p5.
 
 C<p5nsort()> and C<p5ncmp>. Used identically to the p6 versions
 
@@ -107,7 +114,11 @@ yeilds:
 rather than:
 
 9x 14 foo foo12 Foo12a foo12a foo12z foo13a fooa Foolio foolio
- 
+
+Bugs
+
+Probably. None known.
+See caveats listed above.
 
 Author
 
