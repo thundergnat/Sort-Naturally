@@ -1,6 +1,6 @@
 Name
 
-Sort::Naturally.pm
+Sort::Naturally
 
 Synopsis
 
@@ -26,7 +26,6 @@ Or, sort a list of dotted quad notation IP addresses:
     .say for @ips.nsort;
 
 
-
 Description
 
 Sort::Naturally sorts lexically, but sorts groups of consecutive digits by order
@@ -34,10 +33,10 @@ of magnitude.
 
 Similar though not identical to the Perl 5 Sort::Naturally. When sorting strings
 that contain digits, will sort the groups of digits by "order of magnitude",
-then lexically. Order of magnitude is something of a simplification.
-Sort::Naturally does't try to interpret or evaluate a group of digits as a
-number, it just counts how many digits are in each group and uses that as its
-order of magnitude. 
+then lexically by lowercased terms. Order of magnitude is something of a
+simplification. Sort::Naturally does't try to interpret or evaluate a group of
+digits as a number, it just counts how many digits are in each group and uses
+that as its order of magnitude. 
 
 The implications are:
 
@@ -74,9 +73,9 @@ as follows:
     ("%words{$_}, $_").say
       for sort {%words{$^b} <=> %words{$^a} || $^a ncmp $^b}, %words.keys;
 
-Note: this will disable the default Schwartzian Transform and may be very slow.
-If that is an issue either do a manual Schwartzian Transform or some kind of
-caching of terms.
+Note: using a sort block with an arity > 1 will disable the default Schwartzian
+Transform and may be very slow. If that is an issue either do a manual
+Schwartzian Transform or some kind of caching of terms.
 
 ***IMPORTANT CAVEAT***
 As it uses perl6s' sort behind the scenes, Sort::Naturally does a stable sort.
