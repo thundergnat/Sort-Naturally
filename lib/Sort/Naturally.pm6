@@ -17,9 +17,9 @@ sub naturally ($a) is export(:standard) {
 
 sub p5naturally ($a) is export(:p5) {
     $a.lc.subst(/^(\d+)/, -> $/ { 0 ~ $0.chars.chr ~ $0 } )\
-         # Less than awesome use of captures, but rakudo doesn't have <?after ...>
-		 # lookaround implemented yet. Really should be:
-		 # .subst(/<?after \D>(\d+)/, -> $/ { 'z{' ~ $0.chars.chr ~ $0 }, :g)
-		 .subst(/(\D)(\d+)/, -> $/ { $0 ~ 'z{' ~ $1.chars.chr ~ $1 }, :g)
-         ~ "\x0" ~ $a
+      # Less than awesome use of captures, but rakudo doesn't have <?after ...>
+      # lookaround implemented yet. Really should be:
+      # .subst(/<?after \D>(\d+)/, -> $/ { 'z{' ~ $0.chars.chr ~ $0 }, :g)
+      .subst(/(\D)(\d+)/, -> $/ { $0 ~ 'z{' ~ $1.chars.chr ~ $1 }, :g)
+      ~ "\x0" ~ $a
 }
