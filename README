@@ -36,8 +36,8 @@ DESCRIPTION
 
 Similar though not identical to the Perl 5 Sort::Naturally. When sorting strings
 that contain groups of digits, will sort the groups of consecutive digits by
-"order of magnitude", then lexically by lowercased terms. Order of magnitude is
-something of a simplification. Sort::Naturally does't try to interpret or
+"order of magnitude", then lexically by lower-cased terms. Order of magnitude is
+something of a simplification. Sort::Naturally doesn’t try to interpret or
 evaluate a group of digits as a number, it just counts how many digits are in
 each group and uses that as its order of magnitude. 
 
@@ -60,8 +60,8 @@ However, that also means:
     You are not limited by number magnitude. It will sort arbitrarily large
     numbers with ease regardless of the math capability of your hardware/OS.
 
-    It is quite speedy. (For liberal values of speedy.) Since it doesn't need
-    to interpret numbers by value it eliminates a lot of code that would do that.
+    It is quite speedy. (For liberal values of speedy.) Since it doesn't need to
+    interpret numbers by value it eliminates a lot of code that would do that.
 
 Sort::Naturally could have been modified to ignore leading zeros, and in fact I
 experimented with that bit, but ran into issues with strings where leading zeros
@@ -73,10 +73,10 @@ they are still strings. If you truly want to sort numbers, use a numeric sort.
 USAGE
 
 Sort::Naturally has at its heart a sorting block modifier transformation
-routine: &naturally. This performs a tranform of the sort terms so they will end
+routine: &naturally. This performs a transform of the sort terms so they will end
 up in the natural order.
 
-C<nsort> is meant to be used the primary natural sorting routine. Syntactic
+C<nsort> is meant to be used as the primary natural sorting routine. Syntactic
 sugar for C<sort( { .&naturally } )>. May be called either as a method or a sub:
 C<@array.nsort> or C<nsort @array>.
 
@@ -84,7 +84,7 @@ C<ncmp> is meant to be used in sort blocks. Syntactic sugar for C<sort( {
 $^a.naturally cmp $^b.naturally } )>. Useful when you need to do secondary
 sorts.
 
-Say you have a hash containg the words in a document with the keys being the
+Say you have a hash containing the words in a document with the keys being the
 number of times each appears. You could sort by word frequency, then naturally
 as follows:
 
@@ -94,6 +94,15 @@ as follows:
 Note: using a sort block with an arity > 1 will disable the default Schwartzian
 Transform and may be very slow. If that is an issue either do a manual
 Schwartzian Transform or some kind of caching of terms.
+
+nsort will flatten all parameters passed to it into lists whether called as a
+method or sub. (Previously, method calling conventions required manual
+flattening.) This means (@a1,@a2,@a3).nsort will return a list comprised of the
+contents of each of the arrays sorted in natural order, rather than a list of
+the three arrays nsorted on their names. This seems to more what would be
+expected following the <a
+href="http://en.wikipedia.org/wiki/Principle_of_least_astonishment">Principle of
+least astonishment</a>.
 
 
 BACKWARD COMPATIBILITY
@@ -118,7 +127,7 @@ for comparison:
   ('p5nsort:',<foo12z foo foo13a fooa Foolio Foo12a foolio foo12 foo12a 9x 14>\
     .p5nsort).join(' ').say;
  
-yeilds: 
+yields: 
 
        sort: 14 9x Foo12a Foolio foo foo12 foo12a foo12z foo13a fooa foolio
       nsort: 9x 14 foo foo12 Foo12a foo12a foo12z foo13a fooa Foolio foolio

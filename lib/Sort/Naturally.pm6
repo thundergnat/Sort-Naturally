@@ -1,15 +1,27 @@
-module Sort::Naturally:ver<0.1.0>;
+module Sort::Naturally:ver<0.1.1>;
 use v6;
 use MONKEY_TYPING;
 
 augment class Any {
-    method nsort is export(:standard) { self.list.sort( { .&naturally } ) };
-    method p5nsort is export(:p5) { self.list.sort( { .&p5naturally } ) };
+    multi method nsort is export(:standard) { self.list.flat.sort( { .&naturally } ) };
+    multi method p5nsort is export(:p5) { self.list.flat.sort( { .&p5naturally } ) };
 }
 
-sub infix:<ncmp>($a, $b) is export(:standard) {$a.&naturally cmp $b.&naturally}
 
+# Work-around multi subs nsort and p5nsort. Shouldn't be necessary but
+# module load order can affect class method exporting and make them unfindable.
+
+multi sub nsort(*@a) is export(:standard) { @a.nsort; };
+multi sub p5nsort(*@a) is export(:p5) { @a.p5nsort };
+
+
+# Sort modifier block routines
+
+sub infix:<ncmp>($a, $b) is export(:standard) {$a.&naturally cmp $b.&naturally}
 sub infix:<p5ncmp>($a, $b) is export(:p5) {$a.&p5naturally cmp $b.&p5naturally}
+
+
+# core routines to actually do the transformation for sorting
 
 sub naturally ($a) is export(:standard) {
     $a.lc.subst(/(\d+)/, ->$/ { 0 ~ $0.chars.chr ~ $0 }, :g) ~ "\x0" ~ $a
@@ -17,9 +29,9 @@ sub naturally ($a) is export(:standard) {
 
 sub p5naturally ($a) is export(:p5) {
     $a.lc.subst(/^(\d+)/, -> $/ { 0 ~ $0.chars.chr ~ $0 } )\
-      # Less than awesome use of captures, but rakudo doesn't have <?after ...>
-      # lookaround implemented yet. Really should be:
-      # .subst(/<?after \D>(\d+)/, -> $/ { 'z{' ~ $0.chars.chr ~ $0 }, :g)
-      .subst(/(\D)(\d+)/, -> $/ { $0 ~ 'z{' ~ $1.chars.chr ~ $1 }, :g)
-      ~ "\x0" ~ $a
+       # Less than awesome use of captures, but rakudo doesn't have
+       # <?after ...> lookbehind implemented yet for .subst(). Really should be:
+       # .subst(/<?after \D>(\d+)/, -> $/ { 'z{' ~ $0.chars.chr ~ $0 }, :g)
+       .subst(/(\D)(\d+)/, -> $/ { $0 ~ 'z{' ~ $1.chars.chr ~ $1 }, :g)
+       ~ "\x0" ~ $a
 }
