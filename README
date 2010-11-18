@@ -100,9 +100,8 @@ method or sub. (Previously, method calling conventions required manual
 flattening.) This means (@a1,@a2,@a3).nsort will return a list comprised of the
 contents of each of the arrays sorted in natural order, rather than a list of
 the three arrays nsorted on their names. This seems to more what would be
-expected following the <a
-href="http://en.wikipedia.org/wiki/Principle_of_least_astonishment">Principle of
-least astonishment</a>.
+expected following the Principle of least astonishment.
+http://en.wikipedia.org/wiki/Principle_of_least_astonishment
 
 
 BACKWARD COMPATIBILITY
