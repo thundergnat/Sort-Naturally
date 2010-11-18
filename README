@@ -143,7 +143,7 @@ some kind of run time check to modify the behavior based on current locale.
 I'll look into it more seriously later if necessary.
 
 Load on demand is not working yet. By default all methods and subroutines are
-imported into the lexical scope. More an annoyance than a bug. 
+imported into the GLOBAL namespace. More an annoyance than a bug. 
 
 
 AUTHOR
