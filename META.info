@@ -1,0 +1,9 @@
+{
+    "name" : "Sort::Naturally",
+    "version" : "0.1.1",
+    "description" : "Provides several routines to ease natural sorting.",
+    "depends" : [],
+    "repo-type" : "git",
+    "repo-url" : "git://github.com/thundergnat/Sort-Naturally.git"
+}
+
