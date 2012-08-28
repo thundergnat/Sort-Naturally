@@ -135,12 +135,12 @@ yields:
 
 
 By default, only the nsort routines are imported when you use Sort::Naturally.
-If you want to import the p5 compatabilty routines instead, add the p5 tag.
+If you want to import the p5 compatibility routines instead, add the p5 tag.
 
 use Sort::Naturally :p5;
 
-This will load the p5 compatibility routines only. If you want botht the standard
-and compatabilty routines imported, use:
+This will load the p5 compatibility routines only. If you want both the standard
+and compatibility routines imported, use:
 
 use Sort::Naturally :ALL;
 
