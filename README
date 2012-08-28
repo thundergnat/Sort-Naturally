@@ -116,6 +116,7 @@ routines. These are analogues of the primary routines prepended with p5.
 C<p5naturally()>, C<p5nsort()> and C<p5ncmp>. Used identically to the p6
 versions.
 
+
 for comparison:
 
    
@@ -132,7 +133,16 @@ yields:
       nsort: 9x 14 foo foo12 Foo12a foo12a foo12z foo13a fooa Foolio foolio
     p5nsort: 9x 14 foo fooa Foolio foolio foo12 Foo12a foo12a foo12z foo13a
 
- 
+
+By default, only the nsort routines are imported when you use Sort::Naturally.
+If you want to import the p5 compatabilty routines instead, add the p5 tag.
+
+use Sort::Naturally :p5;
+
+This will load the p5 compatibility routines only. If you want botht the standard
+and compatabilty routines imported, use:
+
+use Sort::Naturally :ALL;
 
 BUGS
 
@@ -142,8 +152,6 @@ sort consistently, just not in the order advertised. I can probably implement
 some kind of run time check to modify the behavior based on current locale.
 I'll look into it more seriously later if necessary.
 
-Load on demand is not working yet. By default all methods and subroutines are
-imported into the GLOBAL namespace. More an annoyance than a bug. 
 
 
 AUTHOR

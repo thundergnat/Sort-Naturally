@@ -1,6 +1,6 @@
 {
     "name"        : "Sort::Naturally",
-    "version"     : "0.1.1",
+    "version"     : "0.1.2",
     "description" : "Provides several routines to ease natural sorting.",
     "depends"     : [],
     "source-type" : "git",
