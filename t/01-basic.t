@@ -2,7 +2,7 @@ use v6;
 use Test;
 use Sort::Naturally;
 
-plan 5;
+plan 8;
 
 my @test;
 my $nsorted = '';
