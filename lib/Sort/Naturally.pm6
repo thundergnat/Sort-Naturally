@@ -1,5 +1,5 @@
-unit module Sort::Naturally:ver<0.2.1>:auth<github:thundergnat>;
 use v6;
+unit module Sort::Naturally:ver<0.2.2>:auth<github:thundergnat>;
 
 # Routines to do the transformation for sorting
 
