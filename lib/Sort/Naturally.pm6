@@ -1,5 +1,5 @@
 use v6;
-unit module Sort::Naturally:ver<0.2.2>:auth<zef:thundergnat>;
+unit module Sort::Naturally:ver<0.2.3>:auth<zef:thundergnat>;
 
 # Routines to do the transformation for sorting
 
@@ -171,3 +171,5 @@ Stephen Schulze (also known as thundergnat)
 =head1 LICENSE
 
 Licensed under The Artistic 2.0; see LICENSE.
+
+=end pod
