@@ -1,15 +1,29 @@
 {
-    "perl"        : "6.*",
-    "name"        : "Sort::Naturally",
-    "version"     : "0.2.2",
-    "description" : "Provides several routines to ease natural sorting.",
-    "authors"     : [ "Steve Schulze (thundergnat)" ],
-    "provides"    : {
-        "Sort::Naturally" : "lib/Sort/Naturally.pm6"
-    },
-    "depends"     : [],
-    "source-type" : "git",
-    "source-url"  : "git://github.com/thundergnat/Sort-Naturally.git",
-    "license"     : "Artistic-2.0",
-    "tags"        : [ "Sort", "Comparitor", "Number String", "Order" ]
+  "auth": "zef:thundergnat",
+  "authors": [
+    "Steve Schulze (thundergnat)"
+  ],
+  "build-depends": [
+  ],
+  "depends": [
+  ],
+  "description": "Provides several routines to ease natural sorting.",
+  "license": "Artistic-2.0",
+  "name": "Sort::Naturally",
+  "perl": "6.*",
+  "provides": {
+    "Sort::Naturally": "lib/Sort/Naturally.pm6"
+  },
+  "resources": [
+  ],
+  "source-url": "git://github.com/thundergnat/Sort-Naturally.git",
+  "tags": [
+    "Sort",
+    "Comparitor",
+    "Number String",
+    "Order"
+  ],
+  "test-depends": [
+  ],
+  "version": "0.2.3"
 }

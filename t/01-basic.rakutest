@@ -1,4 +1,3 @@
-use v6;
 use Test;
 use Sort::Naturally;
 
@@ -48,4 +47,4 @@ my $p5nsorted = '9x 14 foo fooa Foolio foolio foo12 Foo12a foo12a foo12z foo13a'
 is(~@p5test.pick(*).sort( { .&p5naturally } ),
   $p5nsorted, "compatibility routine yields expected order");
 
-done-testing();
+done-testing;
