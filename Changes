@@ -1,4 +1,6 @@
 Revision history for Sort-Naturally
 
 {{$NEXT}}
+
+0.2.3  2022-12-23T13:26:42-05:00
     - Migrate to the fez ecosystem
